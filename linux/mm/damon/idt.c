@@ -366,6 +366,7 @@ unsigned long long idt_migrate_region(struct damon_target *target,
  */
 unsigned long long idt_demote_region(struct damon_target *t, struct damon_region *r)
 {
+	printk("Demoting Region\n");
 	int target_nid, r_nid;
 	unsigned long long demoted_pages;
 

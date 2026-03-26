@@ -1,0 +1,14 @@
+!<thin>
+//                                              122       `
+x86/intel/pmc/core.o/
+x86/intel/pmc/pltdrv.o/
+x86/intel/turbo_max_3.o/
+x86/touchscreen_dmi.o/
+x86/p2sb.o/
+x86/pmc_atom.o/
+/0              0           0     0     644     517744    `
+/22             0           0     0     644     125624    `
+/46             0           0     0     644     75152     `
+/71             0           0     0     644     318160    `
+/94             0           0     0     644     188232    `
+/106            0           0     0     644     250128    `

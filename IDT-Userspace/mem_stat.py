@@ -14,9 +14,11 @@ class MemStat:
     def __init__ ():
         """Record initial memory"""
         try:
-            MemStat.meminfo_file = open("/sys/devices/system/node/node0/meminfo", "r")
-            MemStat.pmeminfo0_file = open("/sys/devices/system/node/node2/meminfo", "r")
-            MemStat.pmeminfo1_file = open("/sys/devices/system/node/node3/meminfo", "r")
+            # MemStat.meminfo_file = open("/sys/devices/system/node/node0/meminfo", "r")
+            # MemStat.pmeminfo0_file = open("/sys/devices/system/node/node2/meminfo", "r")
+            # MemStat.pmeminfo1_file = open("/sys/devices/system/node/node3/meminfo", "r")
+            MemStat.meminfo_file0 = open("/sys/devices/system/node/node0/meminfo", "r")
+            MemStat.meminfo_file1 = open("/sys/devices/system/node/node1/meminfo", "r")
         except IOError:
             print("OS error occurred trying to open /sys/devices/system/node/node0, 2, 3/meminfo")
             exit()
@@ -36,10 +38,15 @@ class MemStat:
         if MemStat.meminfo_file is None:
             MemStat.__init__()
 
-        MemStat.mem_left = int(MemStat.meminfo_file.readlines()[1].split()[3]) / 1000
+        # MemStat.mem_left = int(MemStat.meminfo_file.readlines()[1].split()[3]) / 1000
+        MemStat.mem_left0 = int(MemStat.meminfo_file0.readlines()[1].split()[3]) / 1000
+        MemStat.mem_left1 = int(MemStat.meminfo_file1.readlines()[1].split()[3]) / 1000
         
         # set file_pos=start for next read
-        MemStat.meminfo_file.seek(0) 
+        # MemStat.meminfo_file.seek(0) 
+        MemStat.meminfo_file0.seek(0) 
+        MemStat.meminfo_file1.seek(0)
+        MemStat.mem_left = MemStat.mem_left0 + MemStat.mem_left1;
 
         return MemStat.mem_left
 

@@ -63,16 +63,33 @@ def driver (n_iter):
     # Set demotion path
     ConfigNodes.set_demotion_path()
 
-    chkpt = "./pre-trained/checkpoint"
+    # chkpt = "./pre-trained/checkpoint"
+    # import os
+    # # chkpt = "./pre-trained/checkpoint"
+    # chkpt = "./pre-trained/checkpoint/algorithm_state"
+
+    # # if not os.path.isfile(chkpt + ".tune_metadata"):
+    # #     logging.warning("No checkpoint found, will generate one after first train pass")
+    # #     # chkpt = None  # signal to skip restore on first infer
+    # #     chkpt = "./pre-trained/checkpoint/algorithm_state"
+    # if not os.path.isfile(chkpt + ".tune_metadata"):
+    #       logging.warning("No checkpoint found, will generate one after first train pass")
+    #       chkpt = None 
 
     Action.__init__()
     State.__init__()
 
-    infer = Infer(chkpt)
+    # infer = Infer(chkpt)
+    # infer = Infer(chkpt if chkpt is not None else "./pre-trained/checkpoint/algorithm_state")
+
     train = Train()
     timer = Timer()
 
+    logging.info("Generating initial checkpoint via pre-training...")
+    chkpt = run_train(train, timer)
+
     #n_infer = 32
+    infer = Infer(chkpt)
     n_infer = 4
 
     for itr in range(n_iter):

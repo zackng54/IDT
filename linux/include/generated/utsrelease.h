@@ -1,1 +1,1 @@
-#define UTS_RELEASE "6.0.19-IDT+"
+#define UTS_RELEASE "6.0.19-IDT1.1"

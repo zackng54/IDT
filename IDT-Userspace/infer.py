@@ -25,22 +25,17 @@ class Infer:
     """
 
     # probability of choosing random action instead of using trained model
-    rand_p = 0.05
+    # rand_p = 0.05
+    rand_p = 0.02
 
-    def __init__ (self, chkpt_file="./pre-trained/checkpoint", select_env="damon-v0"):
+    def __init__ (self, chkpt_file="./pre-trained/checkpoint/algorithm_state", select_env="damon-v0"):
         logging.info("Infer initializing.")
-
         rl_config = RL_Config()
         rl_config.rllib_init(select_env)
         self.agent = rl_config.rllib_agent_config(1, select_env)
-        self.agent.restore(chkpt_file)
-
-        self.policy = self.agent.get_policy()
-        self.model = self.policy.model
-
+        self.agent.restore(chkpt_file)   # will work since algorithm_state.tune_metadata exists
         Action.__init__()
         State.__init__()
-
         logging.info("Infer initialize complete.")
 
 
@@ -146,6 +141,8 @@ class Infer:
         :param chkpt_file: model to be restored
         """
 
+        # logging.info(f"Model restored from {chkpt_file}.")
+        # self.agent.restore(chkpt_file)
         logging.info(f"Model restored from {chkpt_file}.")
         self.agent.restore(chkpt_file)
         Experience.reset()

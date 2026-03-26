@@ -1,0 +1,21 @@
+!<thin>
+//                                              212       `
+i2c-boardinfo.o/
+i2c-core-base.o/
+i2c-core-smbus.o/
+i2c-core-acpi.o/
+i2c-dev.o/
+busses/i2c-designware-common.o/
+busses/i2c-designware-master.o/
+busses/i2c-designware-platdrv.o/
+busses/i2c-designware-baytrail.o/
+
+/0              0           0     0     644     237112    `
+/17             0           0     0     644     865328    `
+/34             0           0     0     644     562976    `
+/52             0           0     0     644     378216    `
+/69             0           0     0     644     374384    `
+/80             0           0     0     644     339104    `
+/112            0           0     0     644     344792    `
+/144            0           0     0     644     307464    `
+/177            0           0     0     644     219360    `

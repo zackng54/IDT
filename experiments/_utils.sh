@@ -23,7 +23,7 @@ function func_set_nthreads() {
 # drop cache
 function func_clean_page_cache() {
 	info "Drop page cache and stop background services..."
-	DROPCACHE_SCRIPT="sudo /scale/cal/home/wjdoh/init.sh"
+	DROPCACHE_SCRIPT="sudo /bin/true"
 	${DROPCACHE_SCRIPT} > /dev/null
 	
 	# clear dmesg
@@ -121,34 +121,59 @@ function func_initialize_migration_path() {
 	done
 }
 
+# function func_prepare_migration_path() {
+# 	for node in ${MEM_NODES[@]}; do
+# 		case $node in
+# 			0)
+# 				func_config_migration_path $node 1
+# 				func_config_promotion_path $node -1
+# 				func_config_demotion_path  $node 2
+# 				;;
+# 			1)
+# 				func_config_migration_path $node 0
+# 				func_config_promotion_path $node -1
+# 				func_config_demotion_path  $node 3
+# 				;;
+# 			2)
+# 				func_config_migration_path $node 3
+# 				func_config_promotion_path $node 0
+# 				func_config_demotion_path  $node -1
+# 				;;
+# 			3)
+# 				func_config_migration_path $node 2
+# 				func_config_promotion_path $node 1
+# 				func_config_demotion_path  $node -1
+# 				;;
+# 			*)
+# 				err "Add NUMA node$node interfaces"
+# 				;;
+# 		esac
+# 	done
+# }
+
 function func_prepare_migration_path() {
-	for node in ${MEM_NODES[@]}; do
-		case $node in
-			0)
-				func_config_migration_path $node 1
-				func_config_promotion_path $node -1
-				func_config_demotion_path  $node 2
-				;;
-			1)
-				func_config_migration_path $node 0
-				func_config_promotion_path $node -1
-				func_config_demotion_path  $node 3
-				;;
-			2)
-				func_config_migration_path $node 3
-				func_config_promotion_path $node 0
-				func_config_demotion_path  $node -1
-				;;
-			3)
-				func_config_migration_path $node 2
-				func_config_promotion_path $node 1
-				func_config_demotion_path  $node -1
-				;;
-			*)
-				err "Add NUMA node$node interfaces"
-				;;
-		esac
-	done
+    for node in ${MEM_NODES[@]}; do
+        case $node in
+            0)
+                func_config_migration_path $node 1      # peer fast node
+                func_config_promotion_path $node -1     # already fastest
+                func_config_demotion_path  $node 2      # demote to farthest (dist 30)
+                ;;
+            1)
+                func_config_migration_path $node 0      # peer fast node
+                func_config_promotion_path $node -1     # already fastest
+                func_config_demotion_path  $node 3      # demote to farthest (dist 30)
+                ;;
+            2)
+                func_config_migration_path $node 3      # peer slow node
+                func_config_promotion_path $node 0      # promote back to fast
+                func_config_demotion_path  $node -1     # nowhere to demote
+                ;;
+            3)
+                func_config_migration_path $node 2      # peer slow node
+                func_config_promotion_path $node 1      # promote back to fast
+                func_config_demotion_path  $node -1     # nowhere to demote
+                ;;
+        esac
+    done
 }
-
-

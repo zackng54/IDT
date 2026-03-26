@@ -4,3 +4,5 @@ chkpt/
 test.py
 data/experience.buf
 run.sh
+*.log
+venv/

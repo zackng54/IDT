@@ -1,0 +1,14 @@
+!<thin>
+//                                              98        `
+intel/pmc/core.o/
+intel/pmc/pltdrv.o/
+intel/turbo_max_3.o/
+touchscreen_dmi.o/
+p2sb.o/
+pmc_atom.o/
+/0              0           0     0     644     517744    `
+/18             0           0     0     644     125624    `
+/38             0           0     0     644     75152     `
+/59             0           0     0     644     318160    `
+/78             0           0     0     644     188232    `
+/86             0           0     0     644     250128    `

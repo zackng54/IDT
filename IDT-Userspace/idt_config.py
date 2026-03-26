@@ -6,7 +6,7 @@ class IDT_Config:
     num_nodes:      int = 4
 
     # Watermark for enabling demotion
-    demote_wmark:   int = 10
+    demote_wmark:   int = 20
 
     # Wait seconds after applying action
     apply_wait:     int = 2

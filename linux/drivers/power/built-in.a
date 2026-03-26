@@ -1,0 +1,14 @@
+!<thin>
+//                                              166       `
+reset/restart-poweroff.o/
+supply/power_supply_core.o/
+supply/power_supply_sysfs.o/
+supply/power_supply_leds.o/
+supply/power_supply_hwmon.o/
+supply/charger-manager.o/
+/0              0           0     0     644     117520    `
+/26             0           0     0     644     334008    `
+/54             0           0     0     644     187480    `
+/83             0           0     0     644     120320    `
+/111            0           0     0     644     155040    `
+/140            0           0     0     644     437856    `

@@ -56,9 +56,13 @@ function func_set_damon_attrs() {
     sleep 1
 
 	info "Set idt demotion numa node..."
-	NODE0_NEXT_NODE=1
-	NODE1_NEXT_NODE=2
-	NODE2_NEXT_NODE=3
+	# NODE0_NEXT_NODE=1
+	# NODE1_NEXT_NODE=2
+	# NODE2_NEXT_NODE=3
+	# NODE3_NEXT_NODE=-1
+	NODE0_NEXT_NODE=2
+	NODE1_NEXT_NODE=3
+	NODE2_NEXT_NODE=-1
 	NODE3_NEXT_NODE=-1
 	echo "${NODE0_NEXT_NODE} ${NODE1_NEXT_NODE} ${NODE2_NEXT_NODE} ${NODE3_NEXT_NODE}" > /proc/idt_node
 	echo "${NODE0_NEXT_NODE} ${NODE1_NEXT_NODE} ${NODE2_NEXT_NODE} ${NODE3_NEXT_NODE}" > /proc/idt_node
@@ -104,16 +108,18 @@ function func_config_idt_twotier() {
 	echo 2 ${DEMOTION_WATERMARK} ${PROMOTION_WATERMARK} > /proc/idt_config
 	
 	info "Set idt demotion numa node..."
-	cat /prot/idt_node
+	cat /proc/idt_node
 }
 
 # configure multi-tiered idt
 function func_config_idt_multitier() {
-	echo 1 2 3 -1 > /proc/idt_node
-	echo 4 ${DEMOTION_WATERMARK} ${PROMOTION_WATERMARK} > /proc/idt_config
+	# echo 1 2 3 -1 > /proc/idt_node
+	# echo 4 ${DEMOTION_WATERMARK} ${PROMOTION_WATERMARK} > /proc/idt_config
+	echo "2 3 -1 -1" > /proc/idt_node    # 0→2, 1→3, 2 and 3 have nowhere to demote
+	echo "2 ${DEMOTION_WATERMARK} ${PROMOTION_WATERMARK}" > /proc/idt_config
 
 	info "Set idt demotion numa node..."
-	cat /prot/idt_node
+	cat /proc/idt_node
 }
 
 # config idt only for the last program

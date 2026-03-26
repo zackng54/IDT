@@ -1,0 +1,13 @@
+1000000000 updates per thread (16 threads)
+field of 2^34 (17179869184) bytes
+8 byte element size (2147483648 elements total)
+Init took 18.5308 seconds
+Region address: 0x7fbc24200000 - 0x7fc024200000	 size: 17179869184
+Elements per thread: 134217728
+Initialization time: 18.5308 seconds.
+fopen: No such file or directory
+fopen: No such file or directory
+gups-random: gups-random.c:131: do_gups: Assertion `0' failed.
+fopen: No such file or directory
+Command terminated by signal 6
+execution_time 20.70 (s)

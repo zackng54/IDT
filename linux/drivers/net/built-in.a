@@ -1,0 +1,47 @@
+!<thin>
+//                                              386       `
+loopback.o/
+phy/mdio-boardinfo.o/
+phy/mdio_devres.o/
+phy/phy.o/
+phy/phy-c45.o/
+phy/phy-core.o/
+phy/phy_device.o/
+phy/linkmode.o/
+phy/mdio_bus.o/
+phy/mdio_device.o/
+phy/swphy.o/
+phy/phy_led_triggers.o/
+phy/mii_timestamper.o/
+phy/sfp-bus.o/
+phy/fixed_phy.o/
+mdio/acpi_mdio.o/
+mdio/fwnode_mdio.o/
+tun.o/
+ppp/ppp_generic.o/
+slip/slhc.o/
+wireless/ti/wilink_platform_data.o/
+xen-netfront.o/
+
+/0              0           0     0     644     440720    `
+/12             0           0     0     644     180328    `
+/34             0           0     0     644     177872    `
+/53             0           0     0     644     659472    `
+/64             0           0     0     644     441296    `
+/79             0           0     0     644     347096    `
+/95             0           0     0     644     898920    `
+/113            0           0     0     644     28192     `
+/129            0           0     0     644     579400    `
+/145            0           0     0     644     220544    `
+/164            0           0     0     644     23880     `
+/177            0           0     0     644     359128    `
+/201            0           0     0     644     194480    `
+/224            0           0     0     644     513104    `
+/239            0           0     0     644     405560    `
+/256            0           0     0     644     189072    `
+/274            0           0     0     644     210448    `
+/294            0           0     0     644     1501200   `
+/301            0           0     0     644     1031808   `
+/320            0           0     0     644     107528    `
+/333            0           0     0     644     18408     `
+/369            0           0     0     644     991512    `

@@ -7,20 +7,20 @@ fi
 
 NUM_ITER=1
 
-SCHEME="--autonuma"
+#SCHEME="--autonuma"
 #SCHEME="--memtiering"
 #SCHEME="--memtiering-MGLRU"
 #SCHEME="--autotiering"
 #SCHEME="--tpp"
 #SCHEME="--inteltiering"
-#SCHEME="--idt"
+SCHEME="--idt"
 
 TIER="--multitier"
 #TIER="--twotier"
 
 for ITER in $(seq 1 ${NUM_ITER}); do
-	#bash run-core.sh --benchmark graph500 --wss 30GB ${SCHEME} ${TIER}
-	#bash run-core.sh --benchmark imagick --wss small ${SCHEME} ${TIER}
+	# bash run-core.sh --benchmark graph500 --wss 30GB ${SCHEME} ${TIER}
+	# bash run-core.sh --benchmark imagick --wss small ${SCHEME} ${TIER}
 	#bash run-core.sh --benchmark xz --wss tiny ${SCHEME} ${TIER}
 	#bash run-core.sh --benchmark roms --wss small ${SCHEME} ${TIER}
 	#bash run-core.sh --benchmark bc --wss small ${SCHEME} ${TIER}
@@ -31,7 +31,7 @@ for ITER in $(seq 1 ${NUM_ITER}); do
 	#bash run-core.sh --benchmark cactuBSSN --wss tiny ${SCHEME} ${TIER}
 
 	#bash run-core.sh --benchmark gups-pebs --wss small ${SCHEME} ${TIER}
-	#bash run-core.sh --benchmark gups-random --wss small ${SCHEME} ${TIER}
+	# bash run-core.sh --benchmark gups-random --wss small ${SCHEME} ${TIER}
 	#bash run-core.sh --benchmark gups-instantaneous --wss small ${SCHEME} ${TIER}
 
 
@@ -46,6 +46,6 @@ for ITER in $(seq 1 ${NUM_ITER}); do
 	#bash run-core.sh --benchmark bwaves --wss large ${SCHEME} ${TIER}
 	#bash run-core.sh --benchmark cactuBSSN --wss large ${SCHEME} ${TIER}
 	#bash run-core.sh --benchmark gups-pebs --wss large ${SCHEME} ${TIER}
-	#bash run-core.sh --benchmark gups-random --wss large ${SCHEME} ${TIER}
+	bash run-core.sh --benchmark gups-random --wss large ${SCHEME} ${TIER}
 	#bash run-core.sh --benchmark gups-instantaneous --wss large ${SCHEME} ${TIER}
 done

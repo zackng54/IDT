@@ -70,10 +70,18 @@ class ConfigNodes:
         shifted_path = path[1:] + [-1]
 
         shifted_path_str = ' '.join(str(p) for p in shifted_path)
-        if shifted_path != [1, 2, 3, -1]:
-            logging.warning("Demotion path " + shifted_path_str)
-        else:
-            logging.info("Demotion path " + shifted_path_str)
+        # if shifted_path != [1, 2, 3, -1]:
+        #     logging.warning("Demotion path " + shifted_path_str)
+        # else:
+        #     logging.info("Demotion path " + shifted_path_str)
+        # if shifted_path[-1] != -1:
+        #     logging.warning("Unexpected demotion path: " + shifted_path_str)
+        # else:
+        #     logging.info("Demotion path " + shifted_path_str)
+        shifted_path = [2, 3, -1, -1]
+        shifted_path_str = ' '.join(str(p) for p in shifted_path)
+        logging.info("Demotion path (hardcoded for ring topology): " + shifted_path_str)
+
 
         with open('/proc/idt_node', 'w') as f:
             f.write(shifted_path_str + "\n")

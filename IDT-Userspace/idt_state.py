@@ -110,6 +110,14 @@ class State:
             except:
                 continue
             tmp.append(x)
+
+        expected = IDT_Config.num_nodes * State.input_state_num
+        if len(tmp) < expected:
+            logging.info(f"Waiting for DAMON data... got {len(tmp)}, need {expected}")
+            State.proc_param_file.seek(0)
+            time.sleep(2)
+            return  # retry on next call
+
         raw = tmp
         
         i = 0

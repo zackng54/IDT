@@ -1,0 +1,27 @@
+!<thin>
+//                                              176       `
+input.o/
+input-compat.o/
+input-mt.o/
+input-poller.o/
+ff-core.o/
+touchscreen.o/
+vivaldi-fmap.o/
+mousedev.o/
+evdev.o/
+keyboard/atkbd.o/
+touchscreen/elants_i2c.o/
+misc/uinput.o/
+
+/0              0           0     0     644     756040    `
+/9              0           0     0     644     157296    `
+/25             0           0     0     644     230712    `
+/37             0           0     0     644     206448    `
+/53             0           0     0     644     229992    `
+/64             0           0     0     644     211064    `
+/79             0           0     0     644     17744     `
+/95             0           0     0     644     328736    `
+/107            0           0     0     644     440440    `
+/116            0           0     0     644     466056    `
+/134            0           0     0     644     513608    `
+/160            0           0     0     644     347952    `

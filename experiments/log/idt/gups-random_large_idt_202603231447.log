@@ -1,0 +1,19 @@
+1000000000 updates per thread (16 threads)
+field of 2^37 (137438953472) bytes
+8 byte element size (17179869184 elements total)
+Init took 144.4694 seconds
+Region address: 0x7efb15800000 - 0x7f1b15800000	 size: 137438953472
+Elements per thread: 1073741824
+Initialization time: 144.5957 seconds.
+fopen: No such file or directory
+fopen: No such file or directory
+fopen: No such file or directory
+fopen: No such file or directory
+fopen: No such file or directory
+gups-random: gups-random.c:131: do_gups: Assertion `0' failed.
+gups-random: gups-random.c:131: do_gups: Assertion `0' failed.
+gups-random: gups-random.c:131: do_gups: Assertion `0' failed.
+gups-random: gups-random.c:131: do_gups: Assertion `0' failed.
+gups-random: gups-random.c:131: do_gups: Assertion `0' failed.
+Command terminated by signal 6
+execution_time 152.89 (s)

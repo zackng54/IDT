@@ -10,3 +10,52 @@ include/generated/autoconf.h
 include/generated/compile.h
 .config.old
 .version
+
+# Kernel build outputs
+vmlinux
+vmlinux.o
+vmlinux.symvers
+vmlinux-gdb.py
+System.map
+Module.symvers
+modules.builtin
+modules.builtin.modinfo
+modules.order
+modules-only.symvers
+
+# Temporary build files
+.tmp_vmlinux*
+.tmp_System.map
+
+# Hidden build artifacts
+.config.old
+.missing-syscalls.d
+.modules-only.symvers.cmd
+.modules.order.cmd
+.Module.symvers.cmd
+.vmlinux.cmd
+.vmlinux.export.c
+.vmlinux.export.o
+..vmlinux.export.o.cmd
+.vmlinux.objs
+.vmlinux.o.cmd
+.version
+
+# Certs (generated during build)
+certs/
+
+
+linux/*/built-in.a
+*.ko
+*.o
+*.cmd
+*.bin
+*.mod
+*.mod.c
+*.symvers
+*.order
+modules.builtin
+modules.builtin.modinfo
+Module.symvers
+vmlinux
+vmlinuz
