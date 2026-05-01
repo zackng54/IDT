@@ -1,2 +1,51 @@
 ./experiments/workloads/GAPBS/gapbs-data/*
 ./experiments/workloads/*
+# Workloads - large binaries and datasets
+workloads/graph500/omp-csr/
+workloads/SPEC/app/
+workloads/GAPBS/gapbs-data/
+workloads/
+
+# Results and logs
+# result/
+log/
+artifact_result/
+artifact_log/
+
+# RL model training artifacts
+pre-trained/
+*.ckpt
+*.pth
+
+# IDE and OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+*.tmp
+*.log
+pid.log
+tot_gups.txt
+
+# Data files
+data/
+experiments/workloads/
+workloads/
+
+# Linux kernel files
+linux/arch/
+linux/scripts/
+linux/mm/built-in.a
+linux/mm/damon/built-in.a
+linux/mm/migrate.c
+linux/*.o
+linux/*.a
+linux/*.s
+*.o
+*.a
+*.so
+*.so.dbg
