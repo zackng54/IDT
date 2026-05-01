@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DEMOTION_WATERMARK=10
-PROMOTION_WATERMARK=1
+DEMOTION_WATERMARK=20
+PROMOTION_WATERMARK=5
 
 SAMPL=10000
 AGGR=1000000
@@ -60,8 +60,8 @@ function func_set_damon_attrs() {
 	# NODE1_NEXT_NODE=2
 	# NODE2_NEXT_NODE=3
 	# NODE3_NEXT_NODE=-1
-	NODE0_NEXT_NODE=2
-	NODE1_NEXT_NODE=3
+	NODE0_NEXT_NODE=1
+	NODE1_NEXT_NODE=-1
 	NODE2_NEXT_NODE=-1
 	NODE3_NEXT_NODE=-1
 	echo "${NODE0_NEXT_NODE} ${NODE1_NEXT_NODE} ${NODE2_NEXT_NODE} ${NODE3_NEXT_NODE}" > /proc/idt_node
@@ -104,7 +104,8 @@ function func_config_pid_idt() {
 
 # configure two-tiered idt
 function func_config_idt_twotier() {
-	echo 1 -1 -1 -1 > /proc/idt_node
+	# echo 1 -1 -1 -1 > /proc/idt_node
+ 	echo 1 -1 > /proc/idt_node
 	echo 2 ${DEMOTION_WATERMARK} ${PROMOTION_WATERMARK} > /proc/idt_config
 	
 	info "Set idt demotion numa node..."

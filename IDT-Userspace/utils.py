@@ -78,7 +78,8 @@ class ConfigNodes:
         #     logging.warning("Unexpected demotion path: " + shifted_path_str)
         # else:
         #     logging.info("Demotion path " + shifted_path_str)
-        shifted_path = [2, 3, -1, -1]
+        # shifted_path = [2, 3, -1, -1]
+        shifted_path = [1, -1]
         shifted_path_str = ' '.join(str(p) for p in shifted_path)
         logging.info("Demotion path (hardcoded for ring topology): " + shifted_path_str)
 

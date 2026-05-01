@@ -3,7 +3,8 @@ from dataclasses import dataclass
 @dataclass
 class IDT_Config:
     # Number of memory nodes
-    num_nodes:      int = 4
+    # num_nodes:      int = 4
+    num_nodes:      int = 2
 
     # Watermark for enabling demotion
     demote_wmark:   int = 20

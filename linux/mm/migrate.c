@@ -1466,6 +1466,7 @@ retry:
 			 * is processed.
 			 */
 			case -ENOSYS:
+				pr_info("[migrate_pages] ENOSYS: migration unsupported for this page type\n");
 				/* THP migration is unsupported */
 				if (is_thp) {
 					nr_thp_failed++;
@@ -1481,6 +1482,7 @@ retry:
 				nr_failed_pages += nr_subpages;
 				break;
 			case -ENOMEM:
+				pr_info("[migrate_pages] ENOMEM: out of memory on target node, failed_pages=%d\n", nr_failed_pages);
 				/*
 				 * When memory is low, don't bother to try to migrate
 				 * other pages, just exit.
@@ -1507,12 +1509,14 @@ retry:
 				nr_thp_failed += thp_retry;
 				goto out;
 			case -EAGAIN:
+				pr_info("[migrate_pages] EAGAIN: page busy, retrying pass=%d\n", pass);
 				if (is_thp)
 					thp_retry++;
 				else
 					retry++;
 				break;
 			case MIGRATEPAGE_SUCCESS:
+				pr_info("[migrate_pages] SUCCESS: migrated %d subpages, total_succeeded=%d\n", nr_subpages, nr_succeeded);
 				nr_succeeded += nr_subpages;
 				if (is_thp)
 					nr_thp_succeeded++;
@@ -1524,6 +1528,7 @@ retry:
 				 * removed from migration page list and not
 				 * retried in the next outer loop.
 				 */
+				pr_info("[migrate_pages] PERMANENT FAIL: rc=%d, failed_pages=%d\n", rc, nr_failed_pages);
 				if (is_thp)
 					nr_thp_failed++;
 				else if (!no_subpage_counting)

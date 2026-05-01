@@ -4,7 +4,8 @@ THREADS=16
 UPDATES=1000000000
 DATASIZE=8
 
-GUPSPATH="/scale/cal/home-interns/jschang0215/IDT-Experiment/workloads/GUPS"
+GUPSPATH="/users/zackng03/IDT/experiments/workloads/GUPS"
+# GUPSPATH="/scale/cal/home-interns/jschang0215/IDT-Experiment/workloads/GUPS"
 
 if [[ "${BENCH_SIZE}" == "small" ]]; then
 	BENCH_RUN+="numactl -N0 -c0 -- "$GUPSPATH/gups-hotset-move" $THREADS $UPDATES 34 $DATASIZE 33"

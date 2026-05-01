@@ -40,6 +40,8 @@ class Action:
         Action for each node is obtained.
         """
 
+        print("calling read()")
+
         raw = None
         while raw is None:
             try:
@@ -75,6 +77,7 @@ class Action:
 
         done = False
 
+        print("action_str = ", action_str)
         while not done:
             try:
                 proc_action_file = open("/proc/idt_action", "w")

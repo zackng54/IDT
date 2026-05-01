@@ -178,14 +178,14 @@ function func_finish() {
 			;;
         "idt")
             info "Disable demotion..."
-            bash /scale/cal/home-interns/jschang0215/linux-damon/mm/damon/disable_demotion.sh
+            bash /users/zackng03/IDT/linux/mm/damon/disable_demotion.sh
 
             info "Copy trained model to pre-trained path..."
-            cd /scale/cal/home-interns/jschang0215/linux-damon/mm/damon/rl
+            cd /users/zackng03/IDT/IDT-Userspace
             rm -r -f pre-trained/checkpoint.old
             mv pre-trained/checkpoint pre-trained/checkpoint.old
             cp -r -f chkpt/* pre-trained/checkpoint
-            cd /scale/cal/home-interns/jschang0215/experiment
+            cd /users/zackng03/IDT/experiments
 
             ;;
         *)

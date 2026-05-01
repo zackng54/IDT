@@ -21,7 +21,7 @@ EXPORT_SYMBOL(idt_num_nodes);
  * Demotion is enabled when free_space <= total_space * wmark (%)
  * Unit is %. Default 10%.
  */
-unsigned int idt_demote_wmark = 5;
+unsigned int idt_demote_wmark = 50;
 EXPORT_SYMBOL(idt_demote_wmark);
 
 /*
@@ -162,17 +162,24 @@ void idt_get_stat(struct damon_ctx *c)
 
 	/* Initialize idt_stat if not */
 	if (!idt_stat) {
+		printk("Initialize idt_stat\n");
 		idt_stat = kmalloc_array(idt_num_nodes, sizeof(struct idt_node_stat), GFP_KERNEL);
-		memset(idt_stat, 0, sizeof(idt_stat));
+		// memset(idt_stat, 0, sizeof(idt_stat));
+		memset(idt_stat, 0, idt_num_nodes * sizeof(struct idt_node_stat));
 	}
 
 	if (!c)
 		return;
 
+	printk("idt_get_stat kmalloc_array\n");
 	ages = kmalloc_array(idt_num_nodes, sizeof(unsigned int *), GFP_KERNEL);
 
-	for (i = 0; i < idt_num_nodes; i++)
-		ages[i] = kmalloc_array(REGION_STAT_ALLOC_SIZE, sizeof(unsigned int), GFP_KERNEL);
+	for (i = 0; i < idt_num_nodes; i++) {
+		printk("malloc for region's age update\n");
+		ages[i] = kvmalloc_array(REGION_STAT_ALLOC_SIZE, sizeof(unsigned int), GFP_KERNEL);
+
+		// ages[i] = kmalloc_array(REGION_STAT_ALLOC_SIZE, sizeof(unsigned int), GFP_KERNEL);
+	}
 
 	age_idx = kmalloc_array(idt_num_nodes, sizeof(unsigned int), GFP_KERNEL);
 	memset(age_idx, 0, idt_num_nodes * sizeof(unsigned int));
@@ -309,6 +316,7 @@ static const struct mm_walk_ops migrate_pages_walk_ops = {
 unsigned long long idt_migrate_region(struct damon_target *target, 
 			struct damon_region *r, int target_nid)
 {
+	// printk("idt_migrate_region\n");
 	struct mm_struct *mm;
 	LIST_HEAD(idt_migrate_pages);
 	LIST_HEAD(pagelist);
@@ -336,6 +344,7 @@ unsigned long long idt_migrate_region(struct damon_target *target,
 
 		nr_pages = thp_nr_pages(page);
 
+		// printk("migrate_pages here\n");
 		ret = migrate_pages(&pagelist, alloc_demote_page, NULL,
 												target_nid, MIGRATE_SYNC, MR_DEMOTION,
 												&nr_succeeded);
@@ -366,13 +375,16 @@ unsigned long long idt_migrate_region(struct damon_target *target,
  */
 unsigned long long idt_demote_region(struct damon_target *t, struct damon_region *r)
 {
-	printk("Demoting Region\n");
+	// printk("Demoting Region, target pid = %d, region age = %u\n", pid_nr(t->pid), r->age);
 	int target_nid, r_nid;
 	unsigned long long demoted_pages;
 
 	r_nid = r->nid;
-	if (r_nid < 0 || r_nid >= idt_num_nodes)
+	// pr_info("[idt_demote_region] r_nid=%d, idt_num_nodes=%u\n", r_nid, idt_num_nodes);
+	if (r_nid < 0 || r_nid >= idt_num_nodes) {
+		printk("Failed idt_demote_region check\n");
 		return 0;
+	}
 
 	/* Get most upper demotion node with enough space */
 	for (target_nid = idt_next_demotion_node[r->nid]; target_nid < idt_num_nodes; target_nid++) {
@@ -380,6 +392,11 @@ unsigned long long idt_demote_region(struct damon_target *t, struct damon_region
 			break;
 	}
 
+	if (target_nid >= idt_num_nodes) {
+		    target_nid = idt_num_nodes - 1; 
+	}
+
+	// pr_info("[idt_demote_region] target_nid=%d, idt_num_nodes=%u\n", target_nid, idt_num_nodes);
 	if (target_nid < 0 || target_nid >= idt_num_nodes)
 		return 0;
 
@@ -387,6 +404,7 @@ unsigned long long idt_demote_region(struct damon_target *t, struct damon_region
 
 	/* Update region info */
 	if (demoted_pages) {
+		printk("Updating region info\n");
 		idt_stat[r->nid].demoted_pages += demoted_pages;
 		r->age = 0;
 		r->nr_accesses = 0;
@@ -412,29 +430,40 @@ unsigned long long idt_demote_region(struct damon_target *t, struct damon_region
  */
 static long long __idt_demote(struct damon_target *t, struct damon_region *r)
 {
+	printk("__idt_demote here\n");
+	// pr_info("[idt_demote_region] idt_num_nodes=%u\n", idt_num_nodes);
 	unsigned long long demoted_pages;
 
 	/* Check if region is valid */
 	if (r->nid < 0 || r->nid >= idt_num_nodes)
 		r->nid = idt_get_region_nid(t, r);
 
+	printk("region is valid\n");
+
 	/* Check next demotion node is invalid */
 	if (idt_next_demotion_node[r->nid] == NUMA_NO_NODE)
 		return -1;
 
+	printk("next demotion node is valid, id = %d, age = %u\n", pid_nr(t->pid), r->age);
+
 	/* Check if stat is intialized */
 	if (unlikely(!idt_stat))
 		return -1;
+
+	printk("stat is initialized\n");
 
 	/* Check if region is enabled demotion */
 	idt_check_node_freespace();
 	if (!(idt_stat[r->nid].demotion_enabled))
 		return -1;
 
+	printk("region demotion is enabled\n");
+
 	/* Check region access below freq_thres */
 	if (r->nr_accesses > idt_freq_thres[r->nid])
 		return -1;
 
+	printk("region access is below freq_thres\n");
 	/*
 	 * Check region age above age_thres
 	 * In aggresive demtoion, don't consider age
@@ -442,6 +471,7 @@ static long long __idt_demote(struct damon_target *t, struct damon_region *r)
 	if (!(idt_stat[r->nid].aggresive_demotion_enabled) && (r->age < idt_age_thres[r->nid]))
 		return -1;
 
+	printk("region age is above_age_thres\n");
 	demoted_pages = idt_demote_region(t, r);
 
 	return demoted_pages;
@@ -456,6 +486,7 @@ static long long __idt_demote(struct damon_target *t, struct damon_region *r)
  */
 void idt_demote(struct damon_ctx *ctx)
 {
+	// printk("idt_demote\n");
 	struct damon_target *t, *next_t;
 	struct damon_region *r, *next_r;
 	long long *demoted_pages, _demoted_pages, total_demoted_pages = 0;
@@ -483,14 +514,19 @@ void idt_demote(struct damon_ctx *ctx)
 		}
 	}
 
+	// pr_info("[IDT] idt_num_nodes=%u\n", idt_num_nodes);
 	for (node = 0; node < idt_num_nodes; node++) {
 		/* If need agrresive demotion but there is no demoted pages */
 		if (idt_stat[node].aggresive_demotion_enabled && demoted_pages[node] == 0) {
+			// printk("Agresssive Demotion\n");
 			damon_for_each_target_safe(t, next_t, ctx) {
+				// printk("target_safe\n");
 				damon_for_each_region_safe(r, next_r, t) {
 					/* Try demote all regions */
-					if (r->nid == node)
+					if (r->nid == node) {
+						// printk("try demoting all regions\n");
 						idt_demote_region(t, r);
+					}
 				}
 			}
 		}
@@ -498,5 +534,9 @@ void idt_demote(struct damon_ctx *ctx)
 
 	kfree(demoted_pages);
 	
-	pr_info("[Demote] Demoted %lldK pages\n", total_demoted_pages / 1000);
+	// pr_info("[Demote] Demoted %lldK pages\n", total_demoted_pages / 1000);
+// 	pr_info("[Demote] total=%lld pages (%lld KB, %lld MB)\n",
+// 			        total_demoted_pages,
+// 				        total_demoted_pages * PAGE_SIZE / 1024,
+// 					        total_demoted_pages * PAGE_SIZE / 1024 / 1024);
 }

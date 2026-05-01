@@ -42,6 +42,8 @@ void idt_init(struct damon_ctx *ctx)
 	if (!idt_num_nodes)
 		idt_num_nodes = 4;
 
+	// idt_num_nodes = 2;
+
 	/* Initialize min_age */
 	if (!idt_age_thres) {
 		idt_age_thres = kmalloc_array(idt_num_nodes, sizeof(long), GFP_KERNEL);
@@ -231,11 +233,22 @@ void idt_check_node_freespace(void)
 	for (i = 0; i < idt_num_nodes - 1; i++) {
 		si_meminfo_node(val, i);
 		res = (val->freeram <= (val->totalram * idt_demote_wmark) / 100);
-		idt_stat[i].demotion_enabled = res;
+		// idt_stat[i].demotion_enabled = res;
+		idt_stat[i].demotion_enabled = true;
+
 		res = (val->freeram <= (val->totalram * idt_critical_wmark) / 100);
 		idt_stat[i].aggresive_demotion_enabled = res;
 		res = (val->freeram >= (val->totalram * idt_critical_wmark) / 100);
 		idt_stat[i].promotion_enabled = res;
+
+		pr_info("[freespace] node=%d freeram=%lu totalram=%lu demotion_enabled=%d aggressive=%d promotion=%d wmark=%u%%\n",
+            		i,
+            		val->freeram,
+            		val->totalram,
+            		idt_stat[i].demotion_enabled,
+            		idt_stat[i].aggresive_demotion_enabled,
+            		idt_stat[i].promotion_enabled,
+            		idt_demote_wmark);
 	}
 
 	kfree(val);
