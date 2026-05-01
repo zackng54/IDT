@@ -12,6 +12,8 @@ log/
 artifact_result/
 artifact_log/
 
+.venv/
+
 # RL model training artifacts
 pre-trained/
 *.ckpt
